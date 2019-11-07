@@ -6,7 +6,9 @@ class Transposition {
     details.innerHTML = '';
     (string.match(RegExp(`.{1,${key.length}}`, 'g')) || []).forEach((s, j) => {
       let temp = '';
-      for (let i = 0; i < s.length; i++) temp += s[key.indexOf(i + 1)];
+      for (let i = 0; i < key.length; i++) {
+        if (s[key.indexOf(i + 1)]) temp += s[key.indexOf(i + 1)];
+      }
       decrypted.push(temp);
       details.insertAdjacentHTML('beforeend', `
         <li>${s} - ${decrypted[j]}</li>
@@ -18,11 +20,14 @@ class Transposition {
   static encrypt(string, key) {
     let encrypted = [];
     key = key.split(' ').map(i => +i);
+    console.log(key)
     string = string.replace(/ /g, '_');
     details.innerHTML = '';
     (string.match(RegExp(`.{1,${key.length}}`, 'g')) || []).forEach((s, j) => {
       let temp = '';
-      for (let i = 0; i < s.length; i++) temp += s[key[i] - 1];
+      for (let i = 0; i < key.length; i++) {
+        if (s[key[i] - 1]) temp += s[key[i] - 1];
+      }
       encrypted.push(temp);
       details.insertAdjacentHTML('beforeend', `
         <li>${s} - ${encrypted[j]}</li>
