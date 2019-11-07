@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <title>ALEFIRENKO</title>
+</head>
+<body>
+  <main>
+    <article class="title">ALEFIRENKO</article>
+    <section class="alphabet" id="alphabet"></section>
+    <section class="control">
+      <section class="crypto" id="crypto">
+        <input id="crypto__vigenere" type="radio" name="type"><label for="crypto__vigenere">Вижинер</label>
+        <input id="crypto__opened_key" type="radio" name="type"><label for="crypto__opened_key">Автоключ и открытый ключ</label>
+        <input id="crypto__closed_key" type="radio" name="type"><label for="crypto__closed_key">Автоключ и криптограмма</label>
+        <input id="crypto_polyalphabetic" type="radio" name="type"><label for="crypto_polyalphabetic">Полиалфавитная замена</label>
+        <input id="crypto_transposition" type="radio" name="type"><label for="crypto_transposition">Простая перестановка</label>
+      </section>
+      <section class="mode">
+        <span id="mode__decrypt">Расшифровать</span>
+        <input id="mode" type="checkbox">
+        <label for="mode"></label>
+        <span id="mode__encrypt">Зашифровать</span>
+      </section>
+    </section>
+    <section class="calc">
+      <input class="calc__key" id="calc__key" type="text" placeholder="Ключ (по дефолту равно 'КЛЮЧ')">
+      <input class="calc__input" id="calc__input" type="text" placeholder="Ввод (вместо '_' можно печатать пробел)">
+      <div class="textarea">
+        <textarea class="calc__output" id="calc__output" placeholder="Вывод" readonly></textarea>
+        <button class="copy" id="textarea__copy" title="Скопировать"></button>
+      </div>
+    </section>
+    <section class="details-section">
+      <article class="title">Деталирование</article>
+      <ol class="details" id="details"></ol>
+    </section>
+  </main>
+  <script src="alphabet.js"></script>
+  <script src="vigenere.js"></script>
+  <script src="opened_key.js"></script>
+  <script src="closed_key.js"></script>
+  <script src="polyalphabetic.js"></script>
+  <script src="transposition.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
