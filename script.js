@@ -51,6 +51,7 @@ document.body.onload = () => {
   }
   if (selectedMode) mode.checked = selectedMode === 'encrypt';
   calc__input.addEventListener('keyup', recalc);
+  calc__key.addEventListener('keyup', recalc);
   mode.onchange = () => {
     recalc();
     localStorage.setItem('crypto_selected_mode', mode.checked ? 'encrypt' : 'decrypt');
@@ -69,6 +70,4 @@ document.body.onload = () => {
     calc__output.setSelectionRange(0, 99999);
     document.execCommand("copy");
   })
-
-  
 }
