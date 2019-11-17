@@ -23,7 +23,7 @@ function recalc() {
       value = mode.checked ? Transposition.encrypt(...paramsTranspos) : Transposition.decrypt(...paramsTranspos);
       break;
   }
-  if (value) calc__output.value = value;
+  calc__output.value = value ? value : '';
 }
 
 
