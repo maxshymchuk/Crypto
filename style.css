@@ -20,12 +20,17 @@ main {
 main > .title {
   text-align: center;
   font-size: 2rem;
-  padding: 10px 0;
+  margin: 10px 0;
 }
 
 .crypto {
-  border: 2px solid #000;
   user-select: none;
+}
+
+.crypto:before {
+  content: "Выберите метод:";
+  display: block;
+  margin: 5px 0;
 }
 
 .crypto input {
@@ -37,14 +42,19 @@ main > .title {
   padding: 2px 0;
   cursor: pointer;
   text-align: center;
-  border-left: 0 solid #000;
-  border-right: 0 solid #000;
-  border-bottom: 2px solid #000;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+  border-top: 2px solid #000;
   transition: border 0.25s;
 }
 
+.crypto input + label:nth-child(2) {
+  border-radius: 5px 5px 0 0;
+}
+
 .crypto input + label:last-child {
-  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+  border-bottom: 2px solid #000;
 }
 
 .crypto input + label:hover {
@@ -120,6 +130,7 @@ main > .title {
 }
 
 .calc input {
+  border-radius: 5px;
   width: 100%;
   margin-bottom: 10px;
   border: 2px solid #000;
@@ -128,6 +139,8 @@ main > .title {
 }
 
 .calc .textarea {
+  overflow: hidden;
+  border-radius: 5px;
   display: flex;
   border: 2px solid #000;
 }
@@ -149,6 +162,7 @@ main > .title {
   border: 0;
   border-left: 2px solid #000;
   border-bottom: 2px solid #000;
+  border-radius: 0 0 0 5px;
   cursor: pointer;
   background: url("https://image.flaticon.com/icons/svg/126/126498.svg") no-repeat center center;
   background-size: 60%;
@@ -162,6 +176,7 @@ main > .title {
   border: 2px solid #000;
   margin: 10px 0;
   padding: 5px 10px;  
+  border-radius: 5px;
 }
 
 .details-section .details {
