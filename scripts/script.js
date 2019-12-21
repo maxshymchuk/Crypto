@@ -16,17 +16,15 @@ function recalc() {
     case 'crypto__closed_key':
       value = mode.checked ? ClosedKey.encrypt(...params) : ClosedKey.decrypt(...params);
       break;
-    case 'crypto_polyalphabetic':
+    case 'crypto__polyalphabetic':
       value = mode.checked ? Polyalphabetic.encrypt(...paramsPolyalpha) : Polyalphabetic.decrypt(...paramsPolyalpha);
       break;
-    case 'crypto_transposition':
+    case 'crypto__ransposition':
       value = mode.checked ? Transposition.encrypt(...paramsTranspos) : Transposition.decrypt(...paramsTranspos);
       break;
   }
   calc__output.value = value ? value : '';
 }
-
-
 
 document.body.onload = () => {
   const selectedType = localStorage.getItem('crypto_selected_id');
@@ -40,7 +38,7 @@ document.body.onload = () => {
           calc__key.placeholder = 'Количество алфавитов k (по дефолту k = 3)'; break;
         case 'crypto_transposition':
           calc__key.placeholder = 'Порядок перестановки (по дефолту 3 8 1 5 2 7 6 4)'; break;
-        default: 
+        default:
           calc__key.placeholder = `Ключ (по дефолту равно 'КЛЮЧ')`;
       }
     };
