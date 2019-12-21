@@ -1,3 +1,9 @@
+@keyframes blink {
+  50% {
+    visibility: hidden;
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Roboto Slab', serif;
@@ -21,6 +27,21 @@ main > .title {
   text-align: center;
   font-size: 2rem;
   margin: 10px 0;
+  text-transform: lowercase;
+}
+
+main > .title:before,
+main > .title:after {
+  display: inline;
+  animation: blink 1s step-start infinite;
+}
+
+main > .title:before {
+  content: ">";
+}
+
+main > .title:after {
+  content: "_";
 }
 
 .crypto {
@@ -175,7 +196,7 @@ main > .title {
 .details-section {
   border: 2px solid #000;
   margin: 10px 0;
-  padding: 5px 10px;  
+  padding: 5px 10px;
   border-radius: 5px;
 }
 
