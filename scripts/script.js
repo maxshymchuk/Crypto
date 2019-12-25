@@ -27,9 +27,10 @@ function recalc() {
 }
 
 document.body.onload = () => {
+  localStorage.clear();
   const selectedType = localStorage.getItem('crypto_selected_id');
   const selectedMode = localStorage.getItem('crypto_selected_mode');
-  document.getElementById('crypto').querySelectorAll('input').forEach(i => {
+  document.querySelector('.crypto').querySelectorAll('input').forEach(i => {
     i.onchange = () => {
       recalc();
       localStorage.setItem('crypto_selected_id', i.id);
