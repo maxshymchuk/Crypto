@@ -1,47 +1,155 @@
+:root {
+  --default-element-height: 30px;
+
+  --background-color-light: #F8F8FF;
+  --background-color-dark: #000000DD;
+
+  --font-color-light: #000000CC;
+  --font-color-dark: #FFFFFFCC;
+
+  --placeholder-color-light: #00000055;
+  --placeholder-color-dark: #FFFFFF55;
+
+  --border-radius: 5px;
+  --border-width: 2px;
+  --border-color-light: var(--font-color-light);
+  --border-color-dark: var(--font-color-dark);
+
+  --current-font-color: var(--font-color-light);
+  --current-background-color: var(--background-color-light);
+  --current-placeholder-color: var(--placeholder-color-light);
+  --current-border-color: var(--border-color-light);
+}
+
 @keyframes blink {
   50% {
     visibility: hidden;
   }
 }
 
-body {
+@keyframes floating {
+  from {
+    transform: translateX(-5px);
+  }
+  to {
+    transform: translateX(5px);
+  }
+}
+
+.radio__light,
+.radio__dark {
+  display: none;
+}
+
+.radio__light:checked ~ .container {
+  --current-font-color: var(--font-color-light);
+  --current-background-color: var(--background-color-light);
+  --current-border-color: var(--font-color-light);
+  --current-placeholder-color: var(--placeholder-color-light);
+}
+
+.radio__dark:checked ~ .container {
+  --current-font-color: var(--font-color-dark);
+  --current-background-color: var(--background-color-dark);
+  --current-border-color: var(--font-color-dark);
+  --current-placeholder-color: var(--placeholder-color-dark);
+}
+
+.radio__light:checked ~ .container .switch__light {
+  background-color: var(--background-color-dark);
+}
+
+.radio__dark:checked ~ .container .switch__dark {
+  background-color: var(--background-color-light);
+}
+
+html, body {
+  height: 100%;
   margin: 0;
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.container {
+  height: 100%;
+  background-color: var(--current-background-color);
+  color: var(--current-font-color);
+  transition: background-color 500ms;
+}
+
+.container * {
+  user-select: none;
 }
 
 label, input, textarea, button {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto Condensed', sans-serif;
+  color: var(--current-font-color);
+  background-color: transparent;
 }
 
 input:focus, textarea:focus, button:focus {
   outline: none;
 }
 
-main {
-  max-width: 500px;
-  padding: 0 10px;
-  margin: 0 auto;
+input::placeholder, textarea::placeholder, button::placeholder {
+  color: var(--current-placeholder-color);
 }
 
-main > .title {
+.switch {
+  display: flex;
+  position: absolute;
+  top: 20px;
+}
+
+.switch > .switch__light,
+.switch > .switch__dark {
+  text-align: center;
+  display: block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 500ms;
+}
+
+.switch > .switch__light {
+  color: var(--background-color-light);
+}
+
+.switch > .switch__dark {
+  color: var(--background-color-dark);
+}
+
+header {
+  position: relative;
+}
+
+header > .title {
   text-align: center;
   font-size: 2rem;
-  margin: 10px 0;
+  padding: 10px 0;
   text-transform: lowercase;
 }
 
-main > .title:before,
-main > .title:after {
+header > .title:before,
+header > .title:after {
   display: inline;
   animation: blink 1s step-start infinite;
 }
 
-main > .title:before {
+header > .title:before {
   content: ">";
 }
 
-main > .title:after {
+header > .title:after {
   content: "_";
+}
+
+header, main {
+  max-width: 500px;
+  padding: 0 10px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .crypto {
@@ -60,110 +168,94 @@ main > .title:after {
 
 .crypto input + label {
   display: block;
-  padding: 2px 0;
+  text-align: left;
+  height: var(--default-element-height);
+  line-height: var(--default-element-height);
   cursor: pointer;
-  text-align: center;
-  border-left: 2px solid #000;
-  border-right: 2px solid #000;
-  border-top: 2px solid #000;
-  transition: border 0.25s;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--border-radius);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.crypto input + label:nth-child(2) {
-  border-radius: 5px 5px 0 0;
-}
-
-.crypto input + label:last-child {
-  border-radius: 0 0 5px 5px;
-  border-bottom: 2px solid #000;
-}
-
-.crypto input + label:hover {
-  border-left: 20px solid #000;
-  border-right: 20px solid #000;
+.crypto input + label:before {
+  content: ">";
+  padding: 0 10px;
 }
 
 .crypto input:checked + label {
-  background-color: #000;
-  color: #FFF;
+  border: var(--border-width) solid var(--current-border-color);
 }
 
 .mode {
   display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  user-select: none;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  position: relative;
 }
 
 .mode input {
   display: none;
 }
 
-.mode label {
+.mode .switch__decrypt,
+.mode .switch__encrypt {
   display: block;
-  min-width: 60px;
-  height: 20px;
-  margin: 0 20px;
+  width: 50%;
+  text-align: center;
+  height: var(--default-element-height);
+  line-height: var(--default-element-height);
   cursor: pointer;
   position: relative;
-}
-
-.mode span {
-  min-width: 0;
-  overflow-x: hidden;
+  z-index: 1;
   text-overflow: ellipsis;
-  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.mode label:before {
-  display: block;
-  content: "";
-  width: 20px;
-  height: 100%;
-  left: 0;
-  background: url("https://image.flaticon.com/icons/svg/60/60972.svg") no-repeat center center;
-  background-size: 100%;
-  transition: 0.25s;
-  transform-origin: 30px 50%;
-}
-
-.mode label:hover:after {
-  background-color: #000;
-}
-
-.mode label:after {
-  display: block;
-  content: "";
-  width: 20px;
-  height: 20px;
-  box-sizing: border-box;
+.mode .switcher-container {
   position: absolute;
-  top: 0;
-  left: calc(50% - 10px);
-  border-radius: 50%;
-  border: 2px solid #000;
-  transition: background-color 0.25s;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
-.mode input:checked + label:before {
-  left: 20px;
-  transform: rotate(180deg);
+.mode .switcher {
+  border-radius: var(--border-radius);
+  position: absolute;
+  left: 0;
+  box-sizing: border-box;
+  width: 50%;
+  height: var(--default-element-height);
+  border: var(--border-width) solid var(--current-border-color);
+  animation: floating 2s infinite alternate ease-in-out;
+  transition: left 500ms;
+}
+
+.mode .radio__encrypt:checked ~ .switcher-container .switcher {
+  left: 50%;
+}
+
+.calc {
+  display: flex;
+  flex-direction: column;
 }
 
 .calc input {
-  border-radius: 5px;
-  width: 100%;
+  border-radius: var(--border-radius);
   margin-bottom: 10px;
-  border: 2px solid #000;
-  padding: 5px 10px;
-  box-sizing: border-box;
+  border: var(--border-width) solid var(--current-border-color);
+  padding: 0 10px;
+  height: var(--default-element-height);
 }
 
 .calc .textarea {
-  overflow: hidden;
-  border-radius: 5px;
   display: flex;
-  border: 2px solid #000;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid var(--current-border-color);
 }
 
 .calc .textarea textarea {
@@ -181,12 +273,11 @@ main > .title:after {
   top: 0;
   right: 0;
   border: 0;
-  border-left: 2px solid #000;
-  border-bottom: 2px solid #000;
-  border-radius: 0 0 0 5px;
+  border-left: var(--border-width)solid var(--current-border-color);
+  border-bottom: var(--border-width) solid var(--current-border-color);
+  border-radius: 0 0 0 var(--border-radius);
+  font-size: 20px;
   cursor: pointer;
-  background: url("https://image.flaticon.com/icons/svg/126/126498.svg") no-repeat center center;
-  background-size: 60%;
 }
 
 .calc .textarea .copy:hover {
@@ -194,10 +285,15 @@ main > .title:after {
 }
 
 .details-section {
-  border: 2px solid #000;
+  border: var(--border-width) solid var(--current-border-color);
   margin: 10px 0;
-  padding: 5px 10px;
-  border-radius: 5px;
+  min-height: var(--default-element-height);
+  line-height: var(--default-element-height);
+  border-radius: var(--border-radius);
+}
+
+.details-section .title {
+  padding: 0 10px;
 }
 
 .details-section .details {
@@ -205,4 +301,28 @@ main > .title:after {
   max-height: 200px;
   overflow-y: auto;
   margin: 0;
+}
+
+.details-section .details * {
+  user-select: text;
+}
+
+@media screen and (max-width: 400px) {
+  header .title {
+    font-size: 1.4rem;
+    padding: 0;
+  }
+  header .switch {
+    left: 0;
+    right: 0;
+    padding: 0 10px;
+    justify-content: space-between;
+    top: 5px;
+  }
+  .switch > .switch__light,
+  .switch > .switch__dark {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+  }
 }

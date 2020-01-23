@@ -1,7 +1,8 @@
-class Transposition {
-  static decrypt(string, key) {
+import { defaults, details } from './config.js';
+
+export class Transposition {
+  static decrypt(string, key = defaults['transposition'].key) {
     let decrypted = [];
-    key = key.split(' ').map(i => +i);
     string = string.replace(/ /g, '_');
     details.innerHTML = '';
     (string.match(RegExp(`.{1,${key.length}}`, 'g')) || []).forEach((s, j) => {
@@ -17,10 +18,8 @@ class Transposition {
     return decrypted.join('');
   }
 
-  static encrypt(string, key) {
+  static encrypt(string, key = defaults['transposition'].key) {
     let encrypted = [];
-    key = key.split(' ').map(i => +i);
-    console.log(key)
     string = string.replace(/ /g, '_');
     details.innerHTML = '';
     (string.match(RegExp(`.{1,${key.length}}`, 'g')) || []).forEach((s, j) => {

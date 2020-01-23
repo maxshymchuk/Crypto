@@ -1,4 +1,7 @@
-class Polyalphabetic {
+import { defaults, details } from './config.js';
+import { Alphabet } from './alphabet.js';
+
+export class Polyalphabetic {
   static decrypt(string) {
     let decrypted = '';
     let arr = string.split(' ');
@@ -10,10 +13,10 @@ class Polyalphabetic {
         <li>${arr[i]} mod ${Alphabet.length()} = ${res} (${Alphabet.getLetter(res)})</li>
       `)
     }
-    return string ? decrypted : undefined;
+    return string ? decrypted : '';
   }
 
-  static encrypt(string, key) {
+  static encrypt(string, key = defaults['polyalphabetic'].key) {
     let encrypted = '';
     string = string.replace(/ /g, '_');
     details.innerHTML = '';
