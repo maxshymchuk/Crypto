@@ -1,5 +1,8 @@
-class Vigenere {
-  static decrypt(string, key) {
+import { defaults, details } from './config.js';
+import { Alphabet } from './alphabet.js';
+
+export class Vigenere {
+  static decrypt(string, key = defaults['vigenere'].key) {
     let decrypted = '';
     details.innerHTML = '';
     string = string.replace(/ /g, '_');
@@ -13,7 +16,7 @@ class Vigenere {
     return decrypted;
   }
 
-  static encrypt(string, key) {
+  static encrypt(string, key = defaults['vigenere'].key) {
     let encrypted = '';
     details.innerHTML = '';
     string = string.replace(/ /g, '_');

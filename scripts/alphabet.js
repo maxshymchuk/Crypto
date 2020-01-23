@@ -1,4 +1,4 @@
-class Alphabet {
+export class Alphabet {
   static alpha() {
     return [
       'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П',

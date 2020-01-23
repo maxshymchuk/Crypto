@@ -1,5 +1,8 @@
-class ClosedKey {
-  static decrypt(string, key) {
+import { defaults, details } from './config.js';
+import { Alphabet } from './alphabet.js';
+
+export class ClosedKey {
+  static decrypt(string, key = defaults['closed_key'].key) {
     let decrypted = '';
     key = key + string;
     details.innerHTML = '';
@@ -14,7 +17,7 @@ class ClosedKey {
     return decrypted;
   }
 
-  static encrypt(string, key) {
+  static encrypt(string, key = defaults['closed_key'].key) {
     let encrypted = '';
     details.innerHTML = '';
     string = string.replace(/ /g, '_');

@@ -1,72 +1,81 @@
-var details = document.getElementById('details');
+import { defaults } from './config.js';
+import { Vigenere } from './vigenere.js';
+import { OpenedKey } from './opened_key.js';
+import { ClosedKey } from './closed_key.js';
+import { Polyalphabetic } from './polyalphabetic.js';
+import { Transposition } from './transposition.js';
+
+const calcInput = document.getElementById('calc__input');
+const calcOutput = document.getElementById('calc__output');
+const calcKey = document.getElementById('calc__key');
+
+const container = document.body.querySelector('.container');
+const radioDecrypt = document.getElementById('radio__decrypt');
+const radioEncrypt = document.getElementById('radio__encrypt');
 
 function recalc() {
-  const cryptoType = document.getElementById('crypto').querySelector('input:checked').id;
-  const params = [calc__input.value, calc__key.value ? calc__key.value : 'КЛЮЧ'];
-  const paramsPolyalpha = [calc__input.value, calc__key.value ? +calc__key.value : 3];
-  const paramsTranspos = [calc__input.value, calc__key.value ? calc__key.value : '3 8 1 5 2 7 6 4'];
-  let value = '';
+  const cryptoMode = document.getElementById('radio__decrypt').checked ? 'decrypt' : 'encrypt';
+  const cryptoType = document.querySelector('.crypto input:checked').id;
+  const params = [calcInput.value, calcKey.value || undefined];
   switch (cryptoType) {
     case 'crypto__vigenere':
-      value = mode.checked ? Vigenere.encrypt(...params) : Vigenere.decrypt(...params);
+      calcOutput.value = Vigenere[cryptoMode](...params);
       break;
     case 'crypto__opened_key':
-      value = mode.checked ? OpenedKey.encrypt(...params) : OpenedKey.decrypt(...params);
+      calcOutput.value = OpenedKey[cryptoMode](...params);
       break;
     case 'crypto__closed_key':
-      value = mode.checked ? ClosedKey.encrypt(...params) : ClosedKey.decrypt(...params);
+      calcOutput.value = ClosedKey[cryptoMode](...params);
       break;
     case 'crypto__polyalphabetic':
-      value = mode.checked ? Polyalphabetic.encrypt(...paramsPolyalpha) : Polyalphabetic.decrypt(...paramsPolyalpha);
+      calcOutput.value = Polyalphabetic[cryptoMode](...params);
       break;
-    case 'crypto__ransposition':
-      value = mode.checked ? Transposition.encrypt(...paramsTranspos) : Transposition.decrypt(...paramsTranspos);
+    case 'crypto__transposition':
+      calcOutput.value = Transposition[cryptoMode](...params);
       break;
   }
-  calc__output.value = value ? value : '';
+}
+
+function changeMetaColor() {
+  setTimeout(() => {
+    document.getElementById('meta_color').content = window.getComputedStyle(container).getPropertyValue('background-color');
+  }, 500)
 }
 
 document.body.onload = () => {
-  localStorage.clear();
+  const selectedTheme = localStorage.getItem('color_theme_id');
   const selectedType = localStorage.getItem('crypto_selected_id');
   const selectedMode = localStorage.getItem('crypto_selected_mode');
-  document.querySelector('.crypto').querySelectorAll('input').forEach(i => {
+  if (selectedTheme) {
+    document.getElementById(selectedTheme).checked = true;
+  }
+  changeMetaColor();
+  radio__light.onchange = radio__dark.onchange = (e) => {
+    localStorage.setItem('color_theme_id', e.target.id);
+    changeMetaColor();
+  }
+  document.querySelectorAll('.crypto input').forEach(i => {
     i.onchange = () => {
       recalc();
       localStorage.setItem('crypto_selected_id', i.id);
-      switch (i.id) {
-        case 'crypto_polyalphabetic':
-          calc__key.placeholder = 'Количество алфавитов k (по дефолту k = 3)'; break;
-        case 'crypto_transposition':
-          calc__key.placeholder = 'Порядок перестановки (по дефолту 3 8 1 5 2 7 6 4)'; break;
-        default:
-          calc__key.placeholder = `Ключ (по дефолту равно 'КЛЮЧ')`;
-      }
+      calcKey.placeholder = defaults[i.id.replace('crypto__', '')].placeholder;
     };
   })
   if (selectedType) {
     document.getElementById(selectedType).checked = true;
     document.getElementById(selectedType).onchange();
   }
-  if (selectedMode) mode.checked = selectedMode === 'encrypt';
-  calc__input.addEventListener('keyup', recalc);
-  calc__key.addEventListener('keyup', recalc);
-  mode.onchange = () => {
+  calcInput.addEventListener('keyup', recalc);
+  calcKey.addEventListener('keyup', recalc);
+  document.getElementById(`radio__${selectedMode || 'decrypt'}`).checked = true;
+  radioDecrypt.onchange = radioEncrypt.onchange = (e) => {
     recalc();
-    localStorage.setItem('crypto_selected_mode', mode.checked ? 'encrypt' : 'decrypt');
-  };
-  mode__decrypt.addEventListener('click', () => {
-    mode.checked = false;
-    mode.onchange();
-  });
-  mode__encrypt.addEventListener('click', () => {
-    mode.checked = true
-    mode.onchange()
-  });
-  calc__output.addEventListener('keypress', (e) => e.preventDefault());
-  textarea__copy.addEventListener('click', () => {
-    calc__output.select();
-    calc__output.setSelectionRange(0, 99999);
+    localStorage.setItem('crypto_selected_mode', e.target.id.replace('radio__', ''));
+  }
+  calcOutput.addEventListener('keypress', (e) => e.preventDefault());
+  document.getElementById('textarea__copy').addEventListener('click', () => {
+    calcOutput.select();
+    calcOutput.setSelectionRange(0, 99999);
     document.execCommand("copy");
   })
 }

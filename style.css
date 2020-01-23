@@ -1,14 +1,14 @@
 :root {
   --default-element-height: 30px;
 
-  --background-color-light: #FFF;
-  --background-color-dark: #000;
+  --background-color-light: #F8F8FF;
+  --background-color-dark: #000000DD;
 
-  --font-color-light: #000;
-  --font-color-dark: #FFF;
+  --font-color-light: #000000CC;
+  --font-color-dark: #FFFFFFCC;
 
-  --placeholder-color-light: #AAA;
-  --placeholder-color-dark: #999;
+  --placeholder-color-light: #00000055;
+  --placeholder-color-dark: #FFFFFF55;
 
   --border-radius: 5px;
   --border-width: 2px;
@@ -66,7 +66,7 @@
 html, body {
   height: 100%;
   margin: 0;
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 .container {
@@ -76,8 +76,12 @@ html, body {
   transition: background-color 500ms;
 }
 
+.container * {
+  user-select: none;
+}
+
 label, input, textarea, button {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto Condensed', sans-serif;
   color: var(--current-font-color);
   background-color: transparent;
 }
@@ -109,11 +113,11 @@ input::placeholder, textarea::placeholder, button::placeholder {
 }
 
 .switch > .switch__light {
-  color: var(--font-color-dark);
+  color: var(--background-color-light);
 }
 
 .switch > .switch__dark {
-  color: var(--font-color-light);
+  color: var(--background-color-dark);
 }
 
 header {
@@ -189,7 +193,6 @@ header, main {
   justify-content: space-between;
   align-items: center;
   margin: 10px 0;
-  user-select: none;
   position: relative;
 }
 
@@ -284,10 +287,13 @@ header, main {
 .details-section {
   border: var(--border-width) solid var(--current-border-color);
   margin: 10px 0;
-  height: var(--default-element-height);
+  min-height: var(--default-element-height);
   line-height: var(--default-element-height);
-  padding: 0 10px;
   border-radius: var(--border-radius);
+}
+
+.details-section .title {
+  padding: 0 10px;
 }
 
 .details-section .details {
@@ -295,6 +301,10 @@ header, main {
   max-height: 200px;
   overflow-y: auto;
   margin: 0;
+}
+
+.details-section .details * {
+  user-select: text;
 }
 
 @media screen and (max-width: 400px) {
