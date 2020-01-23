@@ -310,12 +310,12 @@ header, main {
 @media screen and (max-width: 400px) {
   header .title {
     font-size: 1.4rem;
-    padding: 0;
+    padding: 10px 0;
   }
   header .switch {
     left: 0;
     right: 0;
-    padding: 0 10px;
+    padding: 10px;
     justify-content: space-between;
     top: 5px;
   }
