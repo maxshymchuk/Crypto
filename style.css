@@ -27,15 +27,6 @@
   }
 }
 
-@keyframes floating {
-  from {
-    transform: translateX(-5px);
-  }
-  to {
-    transform: translateX(5px);
-  }
-}
-
 .radio__light,
 .radio__dark {
   display: none;
@@ -65,6 +56,7 @@
 
 html, body {
   height: 100%;
+  min-width: 200px;
   margin: 0;
   font-family: 'Roboto Condensed', sans-serif;
 }
@@ -213,6 +205,7 @@ header, main {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  padding: 0 10px;
 }
 
 .mode .switcher-container {
@@ -230,7 +223,6 @@ header, main {
   width: 50%;
   height: var(--default-element-height);
   border: var(--border-width) solid var(--current-border-color);
-  animation: floating 2s infinite alternate ease-in-out;
   transition: left 500ms;
 }
 
@@ -270,12 +262,14 @@ header, main {
 .calc .textarea .copy {
   width: 40px;
   height: 40px;
-  top: 0;
-  right: 0;
+  padding: 0;
+  margin: 0;
   border: 0;
-  border-left: var(--border-width)solid var(--current-border-color);
+  outline: 0;
+  flex-shrink: 0;
+  border-left: var(--border-width) solid var(--current-border-color);
   border-bottom: var(--border-width) solid var(--current-border-color);
-  border-radius: 0 0 0 var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
   font-size: 20px;
   cursor: pointer;
 }
